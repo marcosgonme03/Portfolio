@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#161616"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="80%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#ff6a00" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#ff6a00" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <text x="80" y="280" font-family="'Space Grotesk', system-ui, sans-serif"
+        font-weight="700" font-size="96" fill="#ffffff" letter-spacing="-3">
+    Marcos González
+  </text>
+  <text x="80" y="380" font-family="'Space Grotesk', system-ui, sans-serif"
+        font-weight="500" font-size="56" fill="#a3a3a3" letter-spacing="-1">
+    Desarrollador de Aplicaciones
+  </text>
+  <text x="80" y="500" font-family="'Inter', system-ui, sans-serif"
+        font-weight="400" font-size="32" fill="#ff6a00" letter-spacing="3">
+    /MG · PORTFOLIO 2026
+  </text>
+  <line x1="80" y1="540" x2="280" y2="540" stroke="#ff6a00" stroke-width="3"/>
+</svg>

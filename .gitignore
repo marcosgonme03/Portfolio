@@ -1,0 +1,16 @@
+<<<<<<< HEAD
+# Ignorar .env con credenciales reales
+.env
+
+# Dependencias instaladas
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+=======
+backend/
+node_modules/
+.env
+.DS_Store
+>>>>>>> 3c4108e51266d078581b19614378ab93ceb517de

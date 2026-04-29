@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="color-scheme" content="dark" />
+
+  <title>Ascend Dashboard — Caso de Estudio | Marcos González Mesa</title>
+  <meta name="description" content="Dashboard moderno con React 18, TypeScript y Vite. Arquitectura escalable, 23 deployments en Vercel, desarrollo con Lovable Studio." />
+  <meta name="author" content="Marcos González Mesa" />
+
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="../favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../css/styles.css" />
+
+  <style>
+    /* ============================================================
+       ASCEND DASHBOARD — Página de Caso de Estudio
+    ============================================================ */
+
+    /* Hero de la página */
+    .case-hero {
+      position: relative;
+      padding-block: var(--space-xl);
+      padding-top: calc(var(--space-xl) + 80px);
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, transparent 100%);
+      border-bottom: 1px solid var(--clr-border);
+    }
+
+    .case-hero-inner {
+      max-width: 1000px;
+      margin-inline: auto;
+      padding-inline: 2rem;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5em;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--clr-gray-300);
+      margin-bottom: var(--space-lg);
+      transition: color var(--duration-fast) var(--ease-smooth);
+    }
+
+    .back-btn:hover {
+      color: var(--clr-orange);
+    }
+
+    .back-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .case-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-md);
+    }
+
+    .case-subtitle {
+      font-size: 1.1rem;
+      color: var(--clr-gray-300);
+      line-height: 1.8;
+      max-width: 700px;
+      margin-bottom: var(--space-lg);
+    }
+
+    .case-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      padding-top: var(--space-lg);
+      border-top: 1px solid var(--clr-border);
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .meta-label {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--clr-orange);
+    }
+
+    .meta-value {
+      font-size: 1rem;
+      color: var(--clr-white);
+      font-weight: 500;
+    }
+
+    /* Contenido principal */
+    .case-content {
+      max-width: 1000px;
+      margin-inline: auto;
+      padding-inline: 2rem;
+      padding-block: var(--space-xl);
+    }
+
+    .section {
+      margin-bottom: var(--space-xl);
+    }
+
+    .section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-lg);
+      color: var(--clr-white);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section h2::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 28px;
+      background: var(--clr-orange);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .section > p {
+      font-size: 1.05rem;
+      color: var(--clr-gray-300);
+      line-height: 1.8;
+      margin-bottom: var(--space-lg);
+    }
+
+    /* Grid de características */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: var(--space-lg);
+    }
+
+    .feature-card {
+      padding: var(--space-md);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      background: var(--clr-surface);
+      transition: all var(--duration-mid) var(--ease-smooth);
+    }
+
+    .feature-card:hover {
+      border-color: var(--clr-orange);
+      background: rgba(255, 106, 0, 0.03);
+      transform: translateY(-4px);
+    }
+
+    .feature-card strong {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--clr-white);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .feature-card p {
+      font-size: 0.95rem;
+      color: var(--clr-gray-300);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Grid de tecnologías */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: var(--space-lg);
+    }
+
+    .tech-item {
+      padding: 1.5rem;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      background: var(--clr-surface);
+      transition: all var(--duration-mid) var(--ease-smooth);
+    }
+
+    .tech-item:hover {
+      border-color: var(--clr-orange);
+      background: rgba(255, 106, 0, 0.03);
+      transform: translateY(-2px);
+    }
+
+    .tech-item strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--clr-white);
+      margin-bottom: 0.5rem;
+    }
+
+    .tech-item p {
+      font-size: 0.9rem;
+      color: var(--clr-gray-300);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Sección de arquitectura */
+    .architecture-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: var(--space-lg);
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .architecture-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .architecture-col h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--clr-white);
+      margin-bottom: 1rem;
+      margin-top: 2rem;
+    }
+
+    .architecture-col h3:first-child {
+      margin-top: 0;
+    }
+
+    .architecture-col p {
+      font-size: 0.95rem;
+      color: var(--clr-gray-300);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .architecture-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .architecture-list li {
+      font-size: 0.95rem;
+      color: var(--clr-gray-300);
+      line-height: 1.8;
+      padding-left: 1.5rem;
+      position: relative;
+      margin-bottom: 0.5rem;
+    }
+
+    .architecture-list li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--clr-orange);
+      font-weight: bold;
+    }
+
+    .code-block {
+      background: var(--clr-bg-2);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-md);
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: var(--clr-gray-300);
+      overflow-x: auto;
+      line-height: 1.8;
+      margin-top: var(--space-lg);
+    }
+
+    /* Grid de implementación */
+    .impl-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: var(--space-lg);
+    }
+
+    .impl-card {
+      padding: var(--space-md);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      background: var(--clr-surface);
+      border-left: 4px solid var(--clr-orange);
+      transition: all var(--duration-mid) var(--ease-smooth);
+    }
+
+    .impl-card:hover {
+      background: rgba(255, 106, 0, 0.03);
+      transform: translateY(-4px);
+    }
+
+    .impl-card strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--clr-white);
+      margin-bottom: 0.75rem;
+    }
+
+    .impl-card p {
+      font-size: 0.95rem;
+      color: var(--clr-gray-300);
+      line-height: 1.6;
+      margin: 0 0 1rem 0;
+    }
+
+    .impl-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .impl-card li {
+      font-size: 0.9rem;
+      color: var(--clr-gray-300);
+      line-height: 1.6;
+      padding-left: 1.3rem;
+      position: relative;
+      margin-bottom: 0.4rem;
+    }
+
+    .impl-card li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--clr-orange);
+      font-weight: bold;
+    }
+
+    /* Grid de métricas */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin-top: var(--space-lg);
+    }
+
+    .metric-card {
+      padding: 2rem 1.5rem;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      background: var(--clr-surface);
+      text-align: center;
+      transition: all var(--duration-mid) var(--ease-smooth);
+    }
+
+    .metric-card:hover {
+      border-color: var(--clr-orange);
+      background: rgba(255, 106, 0, 0.03);
+      transform: translateY(-4px);
+    }
+
+    .metric-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--clr-orange);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .metric-label {
+      font-size: 0.85rem;
+      color: var(--clr-gray-300);
+      line-height: 1.4;
+    }
+
+    /* Grid de lecciones */
+    .lessons-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: var(--space-lg);
+    }
+
+    @media (max-width: 900px) {
+      .lessons-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .lessons-col h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--clr-white);
+      margin-bottom: 1.5rem;
+    }
+
+    .lesson {
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--clr-border);
+      border-left: 4px solid var(--clr-orange);
+      border-radius: var(--radius-lg);
+      background: var(--clr-surface);
+      transition: all var(--duration-mid) var(--ease-smooth);
+    }
+
+    .lesson:hover {
+      background: rgba(255, 106, 0, 0.03);
+    }
+
+    .lesson strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--clr-white);
+      margin-bottom: 0.5rem;
+    }
+
+    .lesson p {
+      font-size: 0.9rem;
+      color: var(--clr-gray-300);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* CTA Final */
+    .cta-box {
+      margin-top: 5rem;
+      padding: 3rem 2rem;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(255, 106, 0, 0.05) 0%, transparent 100%);
+      text-align: center;
+    }
+
+    .cta-box h2 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--clr-white);
+      margin-bottom: var(--space-md);
+      display: block;
+    }
+
+    .cta-box h2::before {
+      display: none;
+    }
+
+    .cta-box p {
+      font-size: 1.05rem;
+      color: var(--clr-gray-300);
+      margin-bottom: var(--space-lg);
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-buttons .btn {
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <section class="case-hero">
+    <div class="case-hero-inner">
+      <a href="../projects.html" class="back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Volver a Proyectos
+      </a>
+
+      <h1>Ascend Dashboard</h1>
+      <p class="case-subtitle">Dashboard moderno con React 18, TypeScript y Vite. Un caso de estudio sobre arquitectura frontend escalable, despliegue automático en Vercel, y desarrollo flexible con Lovable Studio.</p>
+
+      <div class="case-meta">
+        <div class="meta-item">
+          <span class="meta-label">Tipo</span>
+          <span class="meta-value">Dashboard Web</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Estado</span>
+          <span class="meta-value">Producción</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Deployments</span>
+          <span class="meta-value">23 automáticos</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">URL</span>
+          <span class="meta-value">ascend-dashboard.vercel.app</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contenido -->
+  <div class="case-content">
+
+    <!-- Descripción -->
+    <section class="section">
+      <h2>Descripción General</h2>
+      <p>Ascend Dashboard es una aplicación web moderna que demuestra el uso de tecnologías frontend actuales y mejores prácticas de desarrollo. El proyecto combina un frontend robusto con capacidades interactivas, proporcionando una base sólida para data visualization y análisis en tiempo real.</p>
+      <p>Es un caso de estudio sobre cómo construir aplicaciones React escalables con TypeScript, optimizar el build con Vite, y mantener un workflow flexible usando Lovable Studio además de herramientas tradicionales de IDE.</p>
+    </section>
+
+    <!-- Características -->
+    <section class="section">
+      <h2>Características Principales</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <strong>⚡ Rendimiento Ultra Rápido</strong>
+          <p>Optimizado con Vite para compilación instantánea con HMR. Carga inicial bajo 1 segundo con tree-shaking automático.</p>
+        </div>
+        <div class="feature-card">
+          <strong>🎨 Interfaz Moderna</strong>
+          <p>Componentes shadcn-ui accesibles y estilos personalizados con Tailwind CSS. Diseño limpio y profesional.</p>
+        </div>
+        <div class="feature-card">
+          <strong>📱 100% Responsivo</strong>
+          <p>Funciona perfectamente en desktop, tablet y móvil. Mobile-first approach con UX consistente.</p>
+        </div>
+        <div class="feature-card">
+          <strong>🔧 Código Mantenible</strong>
+          <p>TypeScript (81% del proyecto), componentes reutilizables y arquitectura escalable.</p>
+        </div>
+        <div class="feature-card">
+          <strong>🚀 Despliegue Automático</strong>
+          <p>23 deployments automáticos en Vercel. CI/CD integrado. Cambios en vivo al hacer push.</p>
+        </div>
+        <div class="feature-card">
+          <strong>🛠️ Desarrollo Flexible</strong>
+          <p>Editable en Lovable Studio (visual) o IDE local. Sincronización bidireccional automática.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="section">
+      <h2>Stack Tecnológico</h2>
+      <div class="tech-grid">
+        <div class="tech-item">
+          <strong>⚛️ React 18</strong>
+          <p>Componentes funcionales con hooks, concurrent rendering y automatic batching.</p>
+        </div>
+        <div class="tech-item">
+          <strong>🦾 TypeScript</strong>
+          <p>81% del proyecto. Type safety, mejor IDE y detección temprana de errores.</p>
+        </div>
+        <div class="tech-item">
+          <strong>⚡ Vite</strong>
+          <p>Build tool ultra rápido con ESM nativo, HMR instantáneo y minificación automática.</p>
+        </div>
+        <div class="tech-item">
+          <strong>🎨 Tailwind CSS</strong>
+          <p>Utility-first framework con responsive design integrado y tema personalizado.</p>
+        </div>
+        <div class="tech-item">
+          <strong>📦 shadcn/ui</strong>
+          <p>Componentes accesibles sobre Radix UI, totalmente customizables.</p>
+        </div>
+        <div class="tech-item">
+          <strong>🚀 Vercel</strong>
+          <p>Hosting optimizado con 23 deployments automáticos y custom domains.</p>
+        </div>
+        <div class="tech-item">
+          <strong>💻 Lovable Studio</strong>
+          <p>Plataforma de desarrollo visual con sincronización bidireccional a GitHub.</p>
+        </div>
+        <div class="tech-item">
+          <strong>🔧 Node.js & npm</strong>
+          <p>Runtime JavaScript con npm para dependencias y scripts de build.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Arquitectura -->
+    <section class="section">
+      <h2>Arquitectura & Estructura</h2>
+      <div class="architecture-grid">
+        <div class="architecture-col">
+          <h3>Estructura del Proyecto</h3>
+          <ul class="architecture-list">
+            <li><strong>src/</strong> — Código fuente de la aplicación React</li>
+            <li><strong>backend/</strong> — API backend opcional (Node.js)</li>
+            <li><strong>public/</strong> — Activos estáticos</li>
+            <li><strong>dist/</strong> — Build optimizado para producción</li>
+            <li><strong>components.json</strong> — Configuración de shadcn-ui</li>
+            <li><strong>tsconfig.json</strong> — Configuración TypeScript</li>
+            <li><strong>tailwind.config.js</strong> — Tema Tailwind</li>
+            <li><strong>vite.config.ts</strong> — Configuración del bundler</li>
+          </ul>
+
+          <h3>Flujo de Desarrollo</h3>
+          <ul class="architecture-list">
+            <li><strong>Lovable Studio</strong> — Editor visual sin código</li>
+            <li><strong>Local IDE</strong> — VSCode, WebStorm, etc.</li>
+            <li><strong>GitHub Codespaces</strong> — Desarrollo en la nube</li>
+            <li><strong>Hot Reload</strong> — Cambios instantáneos con Vite</li>
+          </ul>
+        </div>
+
+        <div class="architecture-col">
+          <div class="code-block">┌─────────────────────────┐
+│  Ascend Dashboard       │
+│  (React + TypeScript)   │
+└─────────────────────────┘
+          ↓
+┌─────────────────────────┐
+│   UI Components         │
+│   shadcn-ui + Tailwind  │
+└─────────────────────────┘
+          ↓
+┌─────────────────────────┐
+│  Business Logic         │
+│  TypeScript Hooks       │
+└─────────────────────────┘
+          ↓
+┌─────────────────────────┐
+│  State Management       │
+│  Context API / Hooks    │
+└─────────────────────────┘
+          ↓
+┌─────────────────────────┐
+│  Optional Backend       │
+│  Node.js API            │
+└─────────────────────────┘
+
+Build: Vite
+Deploy: Vercel (23x)
+Env: Node.js + npm</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Implementación -->
+    <section class="section">
+      <h2>Detalles de Implementación</h2>
+      <div class="impl-grid">
+        <div class="impl-card">
+          <strong>🎯 Frontend Moderno</strong>
+          <p>React con componentes funcionales y hooks modernos. Estado manejado con Context API o custom hooks.</p>
+          <ul>
+            <li>React 18 con Hooks</li>
+            <li>TypeScript para type safety</li>
+            <li>shadcn-ui pre-estilizado</li>
+            <li>Responsive design</li>
+          </ul>
+        </div>
+
+        <div class="impl-card">
+          <strong>⚙️ Build Optimization</strong>
+          <p>Vite proporciona compilación eficiente y ESM nativo para desarrollo y producción.</p>
+          <ul>
+            <li>HMR instantáneo</li>
+            <li>Tree-shaking automático</li>
+            <li>Minificación en producción</li>
+            <li>Análisis de bundle</li>
+          </ul>
+        </div>
+
+        <div class="impl-card">
+          <strong>🚀 Deployment Pipeline</strong>
+          <p>Integración automática con Vercel para despliegue en cada push. 23 deployments completados.</p>
+          <ul>
+            <li>CI/CD automático</li>
+            <li>Preview en PRs</li>
+            <li>Production en main</li>
+            <li>Custom domains</li>
+          </ul>
+        </div>
+
+        <div class="impl-card">
+          <strong>🛠️ Development Workflow</strong>
+          <p>Múltiples opciones para desarrollar según preferencias. Sincronización bidireccional con Git.</p>
+          <ul>
+            <li>Lovable Studio (visual)</li>
+            <li>Local IDE</li>
+            <li>GitHub Codespaces</li>
+            <li>Auto git push/pull</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Métricas -->
+    <section class="section">
+      <h2>Métricas de Impacto</h2>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-num">23</div>
+          <div class="metric-label">Deployments Automáticos</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num">&lt;1s</div>
+          <div class="metric-label">Carga Inicial</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num">81%</div>
+          <div class="metric-label">TypeScript</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num">100%</div>
+          <div class="metric-label">Responsivo</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num">A+</div>
+          <div class="metric-label">Lighthouse</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num">0</div>
+          <div class="metric-label">Build Errors</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lecciones -->
+    <section class="section">
+      <h2>Aprendizajes e Iteraciones</h2>
+      <div class="lessons-grid">
+        <div class="lessons-col">
+          <h3>Lecciones Aprendidas</h3>
+          <div class="lesson">
+            <strong>Vite es Vastamente Superior</strong>
+            <p>La velocidad de compilación (< 100ms) y HMR instantáneo transforman la experiencia de desarrollo.</p>
+          </div>
+          <div class="lesson">
+            <strong>TypeScript Aumenta Confianza</strong>
+            <p>Type safety, mejor IDE y refactorización segura. 81% en TypeScript fue la decisión correcta.</p>
+          </div>
+          <div class="lesson">
+            <strong>shadcn-ui Acelera Mucho</strong>
+            <p>Componentes accesibles y customizables evitaron reinventar y mantuvieron consistencia desde el inicio.</p>
+          </div>
+          <div class="lesson">
+            <strong>Lovable para Prototipado</strong>
+            <p>Edición visual más código acelera feedback loops. Excelente para iteración rápida.</p>
+          </div>
+        </div>
+
+        <div class="lessons-col">
+          <h3>Iteraciones Futuras</h3>
+          <div class="lesson">
+            <strong>Backend Robusto</strong>
+            <p>Expandir con Node.js/Express para bases de datos reales y APIs externas.</p>
+          </div>
+          <div class="lesson">
+            <strong>Autenticación Completa</strong>
+            <p>OAuth2, JWT, RBAC y sesiones seguras con refresh tokens.</p>
+          </div>
+          <div class="lesson">
+            <strong>Visualización Avanzada</strong>
+            <p>Recharts o D3.js para gráficos complejos y análisis en tiempo real.</p>
+          </div>
+          <div class="lesson">
+            <strong>Features de IA</strong>
+            <p>Recomendaciones, predictivo analytics y automaciones con LLMs.</p>
+          </div>
+          <div class="lesson">
+            <strong>Testing Exhaustivo</strong>
+            <p>Jest, Cypress/Playwright para unit, integration y E2E tests.</p>
+          </div>
+          <div class="lesson">
+            <strong>Progressive Web App</strong>
+            <p>Service workers para offline y instalación nativa.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-box">
+      <h2>¿Interesado?</h2>
+      <p>Explora el código en GitHub, prueba la aplicación en vivo, o contáctame para discutir mejoras.</p>
+      <div class="cta-buttons">
+        <a href="https://ascend-dashboard.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Ver en Vivo →</a>
+        <a href="https://github.com/marcosgonme03/ascend-dashboard" target="_blank" rel="noopener noreferrer" class="btn btn-outline">GitHub</a>
+        <a href="../projects.html" class="btn btn-ghost">Volver</a>
+      </div>
+    </section>
+
+  </div>
+
+</body>
+</html>

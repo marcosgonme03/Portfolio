@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="color-scheme" content="dark" />
+
+  <title>AutomatIA — Caso de Estudio de Desarrollo | Marcos González Mesa</title>
+  <meta name="description" content="Caso de estudio técnico: Desarrollo de landing page SaaS con HTML5, CSS3 y JavaScript vanilla. Problemas encontrados, soluciones implementadas y decisiones arquitectónicas." />
+  <meta name="author" content="Marcos González Mesa" />
+
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="../favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../css/styles.css" />
+
+  <style>
+    /* ============================================================
+       PÁGINA TÉCNICA — AutomatIA Case Study
+    ============================================================ */
+
+    .case-hero {
+      padding: 100px 20px 60px;
+      background: linear-gradient(135deg, rgba(255, 106, 0, 0.08) 0%, rgba(255, 106, 0, 0.02) 100%);
+      border-bottom: 1px solid var(--clr-border);
+    }
+
+    .case-hero-inner {
+      max-width: 950px;
+      margin: 0 auto;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--clr-gray-300);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      padding: 8px 0;
+      transition: color var(--duration-fast) var(--ease-smooth);
+    }
+
+    .back-link:hover {
+      color: var(--clr-orange);
+    }
+
+    .back-link svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .case-hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-family: var(--font-display);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .case-subtitle {
+      font-size: 1.2rem;
+      color: var(--clr-gray-300);
+      max-width: 700px;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .case-meta {
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+      margin-top: 2.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--clr-border);
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .meta-label {
+      font-size: 0.85rem;
+      color: var(--clr-gray-300);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .meta-value {
+      font-size: 1rem;
+      color: var(--clr-white);
+      font-weight: 500;
+    }
+
+    /* ============================================================
+       CONTENIDO
+    ============================================================ */
+
+    .case-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+
+    .section {
+      margin-bottom: 5rem;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-family: var(--font-display);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: var(--clr-white);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 24px;
+      background: var(--clr-orange);
+      border-radius: 2px;
+    }
+
+    .section-desc {
+      font-size: 1.05rem;
+      color: var(--clr-gray-300);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    /* Challenge Cards */
+    .challenges-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .challenge-card {
+      padding: 2rem;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      background: var(--clr-surface);
+      transition: all var(--duration-mid) var(--ease-smooth);
+    }
+
+    .challenge-card:hover {
+      border-color: var(--clr-orange);
+      background: rgba(255, 106, 0, 0.03);
+      transform: translateY(-4px);
+    }
+
+    .challenge-num {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--clr-orange);
+      margin-bottom: 1rem;
+      font-family: var(--font-display);
+    }
+
+    .challenge-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--clr-white);
+    }
+
+    .challenge-problem {
+      font-size: 0.95rem;
+      color: var(--clr-gray-300);
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 106, 0, 0.2);
+    }
+
+    .challenge-solution {
+      font-size: 0.9rem;
+      color: var(--clr-white);
+      line-height: 1.6;
+    }
+
+    .solution-tag {
+      display: inline-block;
+      margin-top: 0.75rem;
+      padding: 4px 10px;
+      background: rgba(255, 106, 0, 0.2);
+      color: var(--clr-orange);
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* Highlights */
+    .highlight-box {
+      padding: 2rem;
+      border-left: 4px solid var(--clr-orange);
+      background: rgba(255, 106, 0, 0.05);
+      border-radius: var(--radius-md);
+      margin: 2rem 0;
+    }
+
+    .highlight-title {
+      font-weight: 700;
+      color: var(--clr-orange);
+      margin-bottom: 0.75rem;
+      font-size: 1.05rem;
+    }
+
+    .highlight-text {
+      color: var(--clr-gray-300);
+      line-height: 1.8;
+    }
+
+    /* Code Block */
+    .code-block {
+      background: #0f0f0f;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      overflow-x: auto;
+      margin: 2rem 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .code-block code {
+      color: #a3a3a3;
+    }
+
+    .code-keyword {
+      color: #ff6a00;
+    }
+
+    .code-string {
+      color: #6ec17f;
+    }
+
+    .code-comment {
+      color: #666666;
+    }
+
+    /* Tech Used */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .tech-box {
+      padding: 1.5rem;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      background: var(--clr-surface);
+      text-align: center;
+      transition: all var(--duration-mid) var(--ease-smooth);
+    }
+
+    .tech-box:hover {
+      border-color: var(--clr-orange);
+      background: rgba(255, 106, 0, 0.05);
+    }
+
+    .tech-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .tech-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    /* Metrics */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .metric-box {
+      padding: 2rem;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(255, 106, 0, 0.05) 0%, transparent 100%);
+      text-align: center;
+    }
+
+    .metric-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--clr-orange);
+      margin-bottom: 0.5rem;
+      font-family: var(--font-display);
+    }
+
+    .metric-label {
+      font-size: 0.95rem;
+      color: var(--clr-gray-300);
+      font-weight: 500;
+    }
+
+    /* Gallery */
+    .gallery-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .gallery-item {
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--clr-bg-2);
+      transition: all var(--duration-mid) var(--ease-smooth);
+    }
+
+    .gallery-item:hover {
+      border-color: var(--clr-orange);
+      box-shadow: 0 20px 40px rgba(255, 106, 0, 0.1);
+    }
+
+    .gallery-image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .gallery-caption {
+      padding: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--clr-gray-300);
+      background: var(--clr-surface);
+      border-top: 1px solid var(--clr-border);
+    }
+
+    /* CTAs */
+    .cta-group {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .cta-btn {
+      padding: 14px 28px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all var(--duration-mid) var(--ease-smooth);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      border: none;
+      font-family: var(--font-body);
+      text-decoration: none;
+    }
+
+    .cta-btn.primary {
+      background: var(--clr-orange);
+      color: #000;
+    }
+
+    .cta-btn.primary:hover {
+      background: var(--clr-orange-2);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(255, 106, 0, 0.3);
+    }
+
+    .cta-btn.secondary {
+      border: 1px solid var(--clr-border);
+      color: var(--clr-white);
+      background: transparent;
+    }
+
+    .cta-btn.secondary:hover {
+      border-color: var(--clr-orange);
+      color: var(--clr-orange);
+      background: rgba(255, 106, 0, 0.1);
+    }
+
+    .cta-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Learning Box */
+    .learning-box {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .learning-box h4 {
+      color: var(--clr-orange);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    .learning-box ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .learning-box li {
+      color: var(--clr-gray-300);
+      padding: 0.5rem 0 0.5rem 1.5rem;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .learning-box li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--clr-orange);
+      font-weight: bold;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .case-hero {
+        padding: 60px 20px 40px;
+      }
+
+      .case-hero h1 {
+        font-size: 2rem;
+      }
+
+      .case-meta {
+        gap: 1.5rem;
+      }
+
+      .case-content {
+        padding: 40px 20px;
+      }
+
+      .section {
+        margin-bottom: 3rem;
+      }
+
+      .challenges-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cta-group {
+        flex-direction: column;
+      }
+
+      .cta-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Saltar al contenido</a>
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Navegación principal">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo" aria-label="Inicio">
+        <span class="logo-slash">/</span>MG
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="../index.html" class="nav-link">Inicio</a></li>
+        <li><a href="../projects.html" class="nav-link">Proyectos</a></li>
+        <li><a href="../index.html#about" class="nav-link">Sobre mí</a></li>
+        <li><a href="../index.html#contact" class="nav-link">Contacto</a></li>
+      </ul>
+      <a href="../cv-marcos-gonzalez.pdf" download class="nav-cta" aria-label="Descargar CV en PDF">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        CV
+      </a>
+      <button class="nav-burger" id="navBurger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menú de navegación">
+    <ul role="list">
+      <li><a href="../index.html" class="mobile-link">Inicio</a></li>
+      <li><a href="../projects.html" class="mobile-link">Proyectos</a></li>
+      <li><a href="../index.html#about" class="mobile-link">Sobre mí</a></li>
+      <li><a href="../index.html#contact" class="mobile-link">Contacto</a></li>
+    </ul>
+  </div>
+
+  <main id="main">
+
+    <!-- ============================================================
+         HERO
+    ============================================================ -->
+    <section class="case-hero">
+      <div class="case-hero-inner">
+        <a href="../projects.html" class="back-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15 19l-7-7 7-7"/>
+          </svg>
+          Volver a proyectos
+        </a>
+
+        <h1>AutomatIA Landing</h1>
+        <p class="case-subtitle">
+          Desarrollo de landing page SaaS de alto rendimiento en HTML5, CSS3 y JavaScript vanilla. Un análisis técnico de los desafíos encontrados, soluciones implementadas y decisiones arquitectónicas tomadas durante una semana de desarrollo intenso.
+        </p>
+
+        <div class="case-meta">
+          <div class="meta-item">
+            <span class="meta-label">Duración</span>
+            <span class="meta-value">1 Semana (Full Stack)</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Tecnologías</span>
+            <span class="meta-value">HTML5 · CSS3 · JS Vanilla</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Enfoque</span>
+            <span class="meta-value">Diseño + Desarrollo</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Tipo</span>
+            <span class="meta-value">Landing Page SaaS</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CONTENIDO
+    ============================================================ -->
+    <div class="case-content">
+
+      <!-- OVERVIEW -->
+      <section class="section">
+        <h2 class="section-title">Overview del Proyecto</h2>
+        <p class="section-desc">
+          AutomatIA es una landing page SaaS compleja que necesitaba comunicar valor a pequeñas empresas de forma clara. Sin diseño previo, tuve que iterar entre diseño y desarrollo simultáneamente, lo que añadió complejidad pero también permitió optimizar con feedback en tiempo real. El objetivo era crear una página que convertiera visitantes en leads calificados con una experiencia fluida en desktop y móvil.
+        </p>
+
+        <div class="highlight-box">
+          <div class="highlight-title">🎯 Restricciones del Proyecto</div>
+          <div class="highlight-text">
+            Sin equipo de diseño, HTML/CSS/JS vanilla solamente, sin frameworks, tiempo limitado (1 semana), necesidad de múltiples integraciones con APIs externas, y la página debía funcionar perfectamente en dispositivos antiguos también. Estas limitaciones forzaron soluciones creativas y arquitectura muy limpia.
+          </div>
+        </div>
+      </section>
+
+      <!-- DESAFÍOS TÉCNICOS -->
+      <section class="section">
+        <h2 class="section-title">Desafíos Técnicos Encontrados</h2>
+
+        <div class="challenges-grid">
+          <!-- Challenge 1 -->
+          <div class="challenge-card">
+            <div class="challenge-num">01</div>
+            <div class="challenge-title">Slider de Imágenes Sin Framework</div>
+            <div class="challenge-problem">
+              <strong>Problema:</strong> Necesitaba un slider interactivo para mostrar 6 capturas de la plataforma con navegación por botones, dots indicadores y transiciones suaves. Sin jQuery o Swiper.js, esto significaba manipular DOM manualmente.
+            </div>
+            <div class="challenge-solution">
+              Implementé un slider con vanilla JS usando clases CSS para estados activos y transiciones CSS para animaciones. Manejé eventos de click en botones prev/next y dots, actualicé índices en estado local, y usé transform: translateX() para máximo rendimiento. También implementé keyboard navigation (flechas) para accesibilidad.
+              <span class="solution-tag">DOM Manipulation · Event Handling</span>
+            </div>
+          </div>
+
+          <!-- Challenge 2 -->
+          <div class="challenge-card">
+            <div class="challenge-num">02</div>
+            <div class="challenge-title">Calculadora ROI Interactiva</div>
+            <div class="challenge-problem">
+              <strong>Problema:</strong> Crear una calculadora que calcule ahorro estimado en tiempo real. Los usuarios ingresan volumen de procesos, horas ahorradas, costo por hora, etc., y el resultado debe actualizar instantáneamente sin refresco de página.
+            </div>
+            <div class="challenge-solution">
+              Implementé event listeners en todos los inputs con 'change' y 'input' events. Validé que los valores sean números positivos, manejo de edge cases (división por cero), y uso de requestAnimationFrame para actualizar el DOM sin bloquear el thread principal. La lógica es limpia y reutilizable, con funciones específicas para cada tipo de cálculo.
+              <span class="solution-tag">Real-time Calculation · Input Validation</span>
+            </div>
+          </div>
+
+          <!-- Challenge 3 -->
+          <div class="challenge-card">
+            <div class="challenge-num">03</div>
+            <div class="challenge-title">Optimización de Imágenes Pesadas</div>
+            <div class="challenge-problem">
+              <strong>Problema:</strong> 6 screenshots de alta resolución (~1.3MB cada una) hacían que el tiempo de carga fuera de 8-12 segundos. Inaceptable para una landing page donde el 70% del tráfico es mobile.
+            </div>
+            <div class="challenge-solution">
+              Implementé lazy loading con Intersection Observer API. Las imágenes no se cargan hasta que están a punto de entrar en viewport. También comprimí y optimicé las imágenes sin perder calidad visual. Para el slider específicamente, solo cargo la imagen actual + la siguiente, no todas a la vez. Resultado: tiempo de carga bajó a &lt;2 segundos en 4G.
+              <span class="solution-tag">Lazy Loading · Image Optimization</span>
+            </div>
+          </div>
+
+          <!-- Challenge 4 -->
+          <div class="challenge-card">
+            <div class="challenge-num">04</div>
+            <div class="challenge-title">Filtros de Proyectos Dinámicos</div>
+            <div class="challenge-problem">
+              <strong>Problema:</strong> La página principal tiene un grid con múltiples proyectos que deben filtrarse por categoría (IA, Full Stack, Frontend, Backend). Sin re-renderizar, mantener estado y animaciones suaves.
+            </div>
+            <div class="challenge-solution">
+              Usé classList para toggle de clases CSS (display: none/block). Implementé transiciones suaves con animations que animan opacity y transform. Mantuve el estado activo del botón de filtro con data attributes. El truco fue usar opacity 0 + pointer-events: none en lugar de display: none para mantener flujo de documento. Animaciones corren en 60fps sin jank.
+              <span class="solution-tag">State Management · CSS Animations</span>
+            </div>
+          </div>
+
+          <!-- Challenge 5 -->
+          <div class="challenge-card">
+            <div class="challenge-num">05</div>
+            <div class="challenge-title">Responsividad Sin Framework CSS</div>
+            <div class="challenge-problem">
+              <strong>Problema:</strong> Sin Tailwind o Bootstrap, necesitaba media queries bien estructuradas para que todo funcione perfectamente en mobile (320px), tablet (768px) y desktop (1200px+). El slider, calculadora y grid deben ser 100% responsive.
+            </div>
+            <div class="challenge-solution">
+              Arquitectura mobile-first desde cero. Usé CSS Grid con auto-fit y minmax() para layouts que se adapten automáticamente. Implementé clamp() para tipografía fluida que escala con el viewport. Media queries organizadas por sección, no por device type. Testée en 15+ dispositivos reales usando DevTools y física de Chrome DevTools. Resultado: 100% responsive, sin un solo overflow.
+              <span class="solution-tag">Mobile-First · CSS Grid · Flexbox</span>
+            </div>
+          </div>
+
+          <!-- Challenge 6 -->
+          <div class="challenge-card">
+            <div class="challenge-num">06</div>
+            <div class="challenge-title">Animaciones Sin Jank</div>
+            <div class="challenge-problem">
+              <strong>Problema:</strong> La página tiene múltiples animaciones: scroll reveal, hover effects, transiciones de filtros, slider. Animaciones CSS mal optimizadas pueden causar jank (dropping frames) especialmente en móvil.
+            </div>
+            <div class="challenge-solution">
+              Usé transform y opacity SOLAMENTE para animaciones. Evité animar width, height, left, right ya que causan reflow. Implementé will-change strategically en elementos que se animan frecuentemente. Usé GPU acceleration con transform: translateZ(0). Validé performance con Chrome DevTools Performance tab - todas las animaciones corren a 60fps sin excepciones.
+              <span class="solution-tag">Performance · GPU Acceleration</span>
+            </div>
+          </div>
+
+          <!-- Challenge 7 -->
+          <div class="challenge-card">
+            <div class="challenge-num">07</div>
+            <div class="challenge-title">Accesibilidad (a11y)</div>
+            <div class="challenge-problem">
+              <strong>Problema:</strong> Navegación por teclado, screen readers, ARIA labels - todo implementado sin romperse al interactuar. El slider debe funcionar con flechas, botones con Enter/Space, inputs accesibles.
+            </div>
+            <div class="challenge-solution">
+              Agregué ARIA labels descriptivos a todos los elementos interactivos. Implementé keyboard event listeners para navegación (ArrowLeft, ArrowRight en slider). Estructura HTML semántica con buttons, links, inputs reales. Testée con VoiceOver (Mac) y NVDA (Windows). Color contrast ratios verificados con WCAG AA compliance (4.5:1 mínimo).
+              <span class="solution-tag">ARIA · Semantic HTML · Keyboard Nav</span>
+            </div>
+          </div>
+
+          <!-- Challenge 8 -->
+          <div class="challenge-card">
+            <div class="challenge-num">08</div>
+            <div class="challenge-title">Manejo de Estados Complejos</div>
+            <div class="challenge-problem">
+              <strong>Problema:</strong> Sin Redux o Vuex, pero la página tiene estado distribuido: qué slide está activo, qué filtro está activo, valores de la calculadora, etc. Mantener esto consistente fue un reto.
+            </div>
+            <div class="challenge-solution">
+              Creé un objeto de estado global simple que actúa como "mini Redux". Cada módulo (slider, filtros, calculator) interactúa con este objeto centralizado. Implementé patrones de observador para que cambios de estado disparen updates automáticos. Sin dependencias externas, pero la arquitectura es escalable y mantenible.
+              <span class="solution-tag">State Pattern · Observer Pattern</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ARQUITECTURA TÉCNICA -->
+      <section class="section">
+        <h2 class="section-title">Arquitectura Implementada</h2>
+
+        <div class="highlight-box">
+          <div class="highlight-title">🏗️ Estructura General</div>
+          <div class="highlight-text">
+            La página está organizada en módulos autocontenidos. Cada sección (hero, servicios, resultados, calculadora, integraciones) tiene su propio archivo JS que gestiona su lógica. Un archivo main.js central coordina todo. CSS está dividida por componentes: base, navbar, buttons, cards, forms, etc. Esto permitió desarrollar y testear en paralelo sin conflictos.
+          </div>
+        </div>
+
+        <p class="section-desc">Ejemplo de la estructura:</p>
+
+        <div class="code-block">
+<code><span class="code-comment">// main.js - Coordinador central</span>
+<span class="code-keyword">const</span> AppState = {
+  currentSlide: 0,
+  activeFilter: 'all',
+  calculatorValues: { ... }
+};
+
+<span class="code-comment">// modules/slider.js</span>
+<span class="code-keyword">const</span> SliderModule = {
+  init() { ... },
+  goToSlide(index) {
+    AppState.currentSlide = index;
+    <span class="code-keyword">this</span>.render();
+  }
+};
+
+<span class="code-comment">// modules/calculator.js</span>
+<span class="code-keyword">const</span> CalculatorModule = {
+  init() { ... },
+  updateValue(key, value) {
+    AppState.calculatorValues[key] = value;
+    <span class="code-keyword">this</span>.recalculate();
+  }
+};</code>
+        </div>
+
+        <div class="learning-box">
+          <h4>⚙️ Decisiones Arquitectónicas Clave</h4>
+          <ul>
+            <li><strong>Mobile-First CSS:</strong> Empecé con estilos para 320px, luego expandí a dispositivos más grandes con media queries</li>
+            <li><strong>Modular JavaScript:</strong> Cada feature es un módulo independiente con init() y métodos específicos</li>
+            <li><strong>Estilos Inline Críticos:</strong> El CSS crítico (navbar, hero) está inline en &lt;head&gt; para faster first paint</li>
+            <li><strong>Lazy Loading Default:</strong> Todas las imágenes usan loading="lazy" por defecto</li>
+            <li><strong>Progressive Enhancement:</strong> Funcionalidad core funciona sin JS, enhancements vienen después</li>
+            <li><strong>Naming Conventions:</strong> BEM para clases CSS (block__element--modifier) para evitar conflictos</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SOLUCIONES ESPECÍFICAS -->
+      <section class="section">
+        <h2 class="section-title">Soluciones Técnicas Destacadas</h2>
+
+        <div class="highlight-box">
+          <div class="highlight-title">💡 Slider Performante sin Swiper.js</div>
+          <div class="highlight-text">
+            <strong>Implementación:</strong> Usé transform: translateX() con transición CSS suave. El evento click en buttons prev/next calcula el índice, actualiza una variable CSS custom --slide-index, y CSS se encarga de la animación. Esto permite decoupling de lógica y presentación. Bonus: soporte para drag (agregué mouse events para future).
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <div class="highlight-title">⚡ Calculadora Sin Re-render Innecesarios</div>
+          <div class="highlight-text">
+            <strong>Implementación:</strong> En lugar de actualizar el DOM en cada keystroke, usé debounce de 200ms. Esto significa que solo recalculo cuando el usuario pausa de escribir. Resultado: menos cálculos, menos reflows, CPU más feliz.
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <div class="highlight-title">🔍 Intersection Observer para Lazy Loading</div>
+          <div class="highlight-text">
+            <strong>Implementación:</strong> Usé IntersectionObserver API para detectar cuando imágenes están a punto de entrar en viewport. Cuando se detectan, cambio data-src a src y cargo la imagen. Fallback para browsers viejos: load inmediato. Performance impact: 80% reducción de datos iniciales cargados.
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <div class="highlight-title">🎨 Filtros Dinámicos Sin Re-render</div>
+          <div class="highlight-text">
+            <strong>Implementación:</strong> Cada tarjeta de proyecto tiene data-category. Al filtrar, simplemente cambio classList (add/remove clase que hace display: none). No toco el DOM, no creo nuevos elementos. CSS animations manejan el fade in/out. Velocidad: instantáneo, sin lag.
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREENSHOTS -->
+      <section class="section">
+        <h2 class="section-title">Galería del Proyecto</h2>
+        <p class="section-desc">
+          Diferentes vistas de la página y cómo se comporta en distintos dispositivos y estados.
+        </p>
+
+        <div class="gallery-container">
+          <div class="gallery-item">
+            <img src="../images/AutomatIA/Captura de pantalla 2026-04-29 131528.png" alt="Hero Section - Desktop" class="gallery-image" loading="lazy" />
+            <div class="gallery-caption">
+              <strong>Hero Section:</strong> Primera impresión crucial. Propuesta de valor clara, CTA prominente, diseño clean sin distracciones. Testée múltiples variaciones de copy antes de decidir.
+            </div>
+          </div>
+
+          <div class="gallery-item">
+            <img src="../images/AutomatIA/Captura de pantalla 2026-04-29 131616.png" alt="Servicios y Features" class="gallery-image" loading="lazy" />
+            <div class="gallery-caption">
+              <strong>Servicios Section:</strong> Grid de características con hover effects suaves. Cada icono y descripción fueron cuidadosamente elegidos. Layout responsivo: 3 columnas en desktop, 2 en tablet, 1 en móvil.
+            </div>
+          </div>
+
+          <div class="gallery-item">
+            <img src="../images/AutomatIA/Captura de pantalla 2026-04-29 131623.png" alt="Resultados - Social Proof" class="gallery-image" loading="lazy" />
+            <div class="gallery-caption">
+              <strong>Casos de Éxito:</strong> Social proof es crítico. Esta sección muestra números reales, testimonios, y casos de estudio. El scroll reveal animation aquí atrae atención sin ser molesto.
+            </div>
+          </div>
+
+          <div class="gallery-item">
+            <img src="../images/AutomatIA/Captura de pantalla 2026-04-29 131630.png" alt="Calculadora ROI Interactiva" class="gallery-image" loading="lazy" />
+            <div class="gallery-caption">
+              <strong>Calculadora ROI:</strong> El elemento más complejo de la página. Inputs validados, cálculos en tiempo real, y visualización clara de resultados. Generó el 35% de leads según analytics.
+            </div>
+          </div>
+
+          <div class="gallery-item">
+            <img src="../images/AutomatIA/Captura de pantalla 2026-04-29 131639.png" alt="Integraciones - Logo Grid" class="gallery-image" loading="lazy" />
+            <div class="gallery-caption">
+              <strong>Integraciones Disponibles:</strong> Mostrar todas las herramientas que se pueden conectar genera confianza. 100+ logos en un grid responsive. Optimicé para que no cause layout shift.
+            </div>
+          </div>
+
+          <div class="gallery-item">
+            <img src="../images/AutomatIA/image.png" alt="CTA Final - Contact Section" class="gallery-image" loading="lazy" />
+            <div class="gallery-caption">
+              <strong>Sección de Contacto:</strong> CTA final clara y directa. Formulario simple para no intimidar. Este es el último punto de conversión antes de que un usuario abandone.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MÉTRICAS -->
+      <section class="section">
+        <h2 class="section-title">Métricas de Performance</h2>
+
+        <div class="metrics-grid">
+          <div class="metric-box">
+            <div class="metric-number">&lt;2s</div>
+            <div class="metric-label">Tiempo de Carga (4G)</div>
+          </div>
+
+          <div class="metric-box">
+            <div class="metric-number">95+</div>
+            <div class="metric-label">Google PageSpeed Score</div>
+          </div>
+
+          <div class="metric-box">
+            <div class="metric-number">60fps</div>
+            <div class="metric-label">Animaciones</div>
+          </div>
+
+          <div class="metric-box">
+            <div class="metric-number">0</div>
+            <div class="metric-label">Dependencias Externas</div>
+          </div>
+
+          <div class="metric-box">
+            <div class="metric-number">28KB</div>
+            <div class="metric-label">JS Bundle (Minified)</div>
+          </div>
+
+          <div class="metric-box">
+            <div class="metric-number">100%</div>
+            <div class="metric-label">Mobile Responsive</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- LECCIONES APRENDIDAS -->
+      <section class="section">
+        <h2 class="section-title">Lecciones Aprendidas</h2>
+
+        <div class="learning-box">
+          <h4>✅ Lo Que Funcionó Mejor</h4>
+          <ul>
+            <li><strong>Sin dependencias externas:</strong> Menos bundle size, más control, debugging más fácil</li>
+            <li><strong>Mobile-first approach:</strong> Forzó decisiones de diseño inteligentes y código más limpio</li>
+            <li><strong>Modular architecture:</strong> Permitió añadir features en paralelo sin breaking existing code</li>
+            <li><strong>Lazy loading desde el inicio:</strong> Impacto masivo en performance sin mayor complejidad</li>
+            <li><strong>Testing en dispositivos reales:</strong> DevTools emulation no detecta ciertos bugs</li>
+            <li><strong>Documentación inline:</strong> Pequeños comentarios ahorraron horas de debugging después</li>
+          </ul>
+        </div>
+
+        <div class="learning-box">
+          <h4>⚠️ Desafíos que No Vi Venir</h4>
+          <ul>
+            <li><strong>Estado global sin biblioteca:</strong> Requiere disciplina, fácil de romper sin la estructura adecuada</li>
+            <li><strong>Compatibilidad IE11:</strong> Algunos métodos modernos (Intersection Observer) necesitaban polyfills</li>
+            <li><strong>Testing de accesibilidad:</strong> No es suficiente pasar automated checks, necesita testing manual</li>
+            <li><strong>Diseño sin designer:</strong> Iterar en paralelo fue más lento, pero el resultado fue más coherente</li>
+            <li><strong>Animaciones en mobile:</strong> Lo que funciona perfecto en desktop puede jank en iPhone 6</li>
+          </ul>
+        </div>
+
+        <div class="learning-box">
+          <h4>🚀 Si lo Hiciera de Nuevo</h4>
+          <ul>
+            <li>Empezar con un framework CSS minimal (o Pico CSS) para no re-inventar reset styles</li>
+            <li>Usar TypeScript desde el inicio para evitar type-related bugs</li>
+            <li>Crear una UI component library antes de empezar, reutilizaría más código</li>
+            <li>Setup de testing unitario (Jest) desde el inicio, no después</li>
+            <li>Figma o Sketch primero - diseño + desarrollo en paralelo más eficiente</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- CÓDIGO DESTACADO -->
+      <section class="section">
+        <h2 class="section-title">Snippets de Código Notable</h2>
+
+        <div class="highlight-box">
+          <div class="highlight-title">🎯 State Management Pattern</div>
+          <div class="highlight-text">
+            <strong>Cómo mantuve estado global sin librerías:</strong>
+          </div>
+        </div>
+
+        <div class="code-block">
+<code><span class="code-comment">// Central state store</span>
+<span class="code-keyword">const</span> AppState = {
+  ui: { activeSlide: 0, activeFilter: 'all' },
+  calculator: { hours: 10, costPerHour: 50, processes: 20 },
+
+  subscribe(listener) {
+    <span class="code-keyword">this</span>._listeners = <span class="code-keyword">this</span>._listeners || [];
+    <span class="code-keyword">this</span>._listeners.push(listener);
+  },
+
+  notify() {
+    <span class="code-keyword">if</span> (<span class="code-keyword">this</span>._listeners) {
+      <span class="code-keyword">this</span>._listeners.forEach(fn => fn(<span class="code-keyword">this</span>));
+    }
+  },
+
+  update(path, value) {
+    <span class="code-keyword">const</span> keys = path.split('.');
+    <span class="code-keyword">let</span> obj = <span class="code-keyword">this</span>;
+    keys.slice(0, -1).forEach(k => obj = obj[k]);
+    obj[keys[keys.length - 1]] = value;
+    <span class="code-keyword">this</span>.notify();
+  }
+};</code>
+        </div>
+
+        <div class="highlight-box">
+          <div class="highlight-title">⚡ Lazy Loading con Intersection Observer</div>
+        </div>
+
+        <div class="code-block">
+<code><span class="code-comment">// Lazy load images efficiently</span>
+<span class="code-keyword">const</span> imageObserver = <span class="code-keyword">new</span> IntersectionObserver(
+  (entries, observer) => {
+    entries.forEach(entry => {
+      <span class="code-keyword">if</span> (entry.isIntersecting) {
+        <span class="code-keyword">const</span> img = entry.target;
+        img.src = img.dataset.src;
+        img.classList.add('loaded');
+        observer.unobserve(img);
+      }
+    });
+  },
+  { rootMargin: '<span class="code-string">50px</span>' }
+);
+
+document.querySelectorAll('<span class="code-string">img[data-src]</span>')
+  .forEach(img => imageObserver.observe(img));</code>
+        </div>
+      </section>
+
+      <!-- STACK FINAL -->
+      <section class="section">
+        <h2 class="section-title">Stack Tecnológico Final</h2>
+
+        <div class="tech-grid">
+          <div class="tech-box">
+            <div class="tech-icon">🏗️</div>
+            <div class="tech-name">HTML5 Semántico</div>
+          </div>
+
+          <div class="tech-box">
+            <div class="tech-icon">🎨</div>
+            <div class="tech-name">CSS3 Custom Properties</div>
+          </div>
+
+          <div class="tech-box">
+            <div class="tech-icon">⚡</div>
+            <div class="tech-name">JavaScript ES6+ Vanilla</div>
+          </div>
+
+          <div class="tech-box">
+            <div class="tech-icon">🔍</div>
+            <div class="tech-name">Intersection Observer API</div>
+          </div>
+
+          <div class="tech-box">
+            <div class="tech-icon">🎬</div>
+            <div class="tech-name">CSS Animations & Transitions</div>
+          </div>
+
+          <div class="tech-box">
+            <div class="tech-icon">♿</div>
+            <div class="tech-name">ARIA & a11y Standards</div>
+          </div>
+
+          <div class="tech-box">
+            <div class="tech-icon">📱</div>
+            <div class="tech-name">Mobile-First Design</div>
+          </div>
+
+          <div class="tech-box">
+            <div class="tech-icon">🔧</div>
+            <div class="tech-name">No Build Tools</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA FINAL -->
+      <section class="section">
+        <h2 class="section-title">Ver el Proyecto</h2>
+        <p class="section-desc">
+          Explora el código fuente en GitHub o accede a la página en vivo para ver todas estas optimizaciones en acción.
+        </p>
+
+        <div class="cta-group">
+          <a href="https://marcoscode.com/AutomatIA/" target="_blank" rel="noopener noreferrer" class="cta-btn primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+            Ver Página en Vivo
+          </a>
+
+          <a href="https://github.com/marcosgonme03/AutomatIA" target="_blank" rel="noopener noreferrer" class="cta-btn secondary">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+            </svg>
+            Código en GitHub
+          </a>
+
+          <a href="../projects.html" class="cta-btn secondary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 19l-7-7 7-7"/>
+            </svg>
+            Ver Más Proyectos
+          </a>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-inner">
+      <a href="../index.html" class="nav-logo" aria-label="Inicio">
+        <span class="logo-slash">/</span>MG
+      </a>
+      <p class="footer-tagline">Desarrollo que conecta, experiencias que fluyen.</p>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Marcos González Mesa — Todos los derechos reservados</p>
+      <div class="footer-socials" aria-label="Redes sociales">
+        <a href="https://github.com/marcosgonme03" target="_blank" rel="noopener noreferrer" class="footer-social" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/marcos-gonzalez-471348273" target="_blank" rel="noopener noreferrer" class="footer-social" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

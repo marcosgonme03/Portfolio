@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="color-scheme" content="dark" />
+
+  <title>Proyectos — Marcos González Mesa | Portfolio</title>
+  <meta name="description" content="Galería completa de proyectos de Marcos González Mesa. Desde aplicaciones web full stack hasta sistemas de IA. Explora cada trabajo realizado." />
+  <meta name="author" content="Marcos González Mesa" />
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <style>
+    /* ============================================================
+       PÁGINA DE PROYECTOS — Estilos adicionales
+    ============================================================ */
+
+    .projects-page-hero {
+      padding: 80px 20px 40px;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(255, 106, 0, 0.05) 0%, transparent 100%);
+    }
+
+    .projects-page-hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-family: var(--font-display);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .projects-page-hero p {
+      font-size: 1.1rem;
+      color: var(--clr-gray-300);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Filtros */
+    .projects-filters {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 40px 0;
+      padding: 0 20px;
+    }
+
+    .filter-btn {
+      padding: 8px 16px;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-pill);
+      background: transparent;
+      color: var(--clr-white);
+      font-size: 0.95rem;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      border-color: var(--clr-orange);
+      color: var(--clr-orange);
+      background: rgba(255, 106, 0, 0.1);
+    }
+
+    /* Grid mejorado */
+    .projects-grid-full {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 2rem;
+      padding: 40px 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .projects-grid-full {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .project-card {
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--clr-surface);
+      transition: all var(--duration-mid) var(--ease-smooth);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .project-card:hover {
+      border-color: var(--clr-orange);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(255, 106, 0, 0.1);
+    }
+
+    .card-image {
+      width: 100%;
+      height: 280px;
+      overflow: hidden;
+      background: var(--clr-bg-3);
+      position: relative;
+    }
+
+    .card-image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--clr-bg-2) 0%, var(--clr-bg-3) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-image-placeholder::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 30% 70%, rgba(255, 106, 0, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .card-num {
+      font-size: 4rem;
+      font-weight: 700;
+      color: rgba(255, 106, 0, 0.15);
+      font-family: var(--font-display);
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-info {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .card-tag {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 106, 0, 0.1);
+      color: var(--clr-orange);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .card-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      font-family: var(--font-display);
+    }
+
+    .card-desc {
+      font-size: 0.95rem;
+      color: var(--clr-gray-300);
+      line-height: 1.6;
+      flex-grow: 1;
+      margin-bottom: 20px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .card-action {
+      flex: 1;
+      padding: 10px 16px;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--clr-white);
+      font-size: 0.9rem;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .card-action svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .card-action:hover {
+      border-color: var(--clr-orange);
+      color: var(--clr-orange);
+      background: rgba(255, 106, 0, 0.1);
+    }
+
+    .card-action.hidden {
+      display: none;
+    }
+
+    .projects-empty {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--clr-gray-300);
+    }
+
+    .projects-empty h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: revealIn 0.6s ease-out forwards;
+    }
+
+    @keyframes revealIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Saltar al contenido</a>
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Navegación principal">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Inicio">
+        <span class="logo-slash">/</span>MG
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html" class="nav-link">Inicio</a></li>
+        <li><a href="projects.html" class="nav-link active">Proyectos</a></li>
+        <li><a href="index.html#about" class="nav-link">Sobre mí</a></li>
+        <li><a href="index.html#contact" class="nav-link">Contacto</a></li>
+      </ul>
+      <a href="cv-marcos-gonzalez.pdf" download class="nav-cta" aria-label="Descargar CV en PDF">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        CV
+      </a>
+      <button class="nav-burger" id="navBurger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menú de navegación">
+    <ul role="list">
+      <li><a href="index.html" class="mobile-link">Inicio</a></li>
+      <li><a href="projects.html" class="mobile-link">Proyectos</a></li>
+      <li><a href="index.html#about" class="mobile-link">Sobre mí</a></li>
+      <li><a href="index.html#contact" class="mobile-link">Contacto</a></li>
+    </ul>
+  </div>
+
+  <main id="main">
+
+    <!-- ============================================================
+         HERO — Página de proyectos
+    ============================================================ -->
+    <section class="projects-page-hero">
+      <h1>Mis Proyectos</h1>
+      <p>Una selección de trabajos donde la funcionalidad y el diseño se encuentran. Del concepto al código — con propósito.</p>
+    </section>
+
+    <!-- ============================================================
+         FILTROS
+    ============================================================ -->
+    <div class="projects-filters">
+      <button class="filter-btn active" data-filter="all">Todos</button>
+      <button class="filter-btn" data-filter="fullstack">Full Stack</button>
+      <button class="filter-btn" data-filter="ia">IA</button>
+      <button class="filter-btn" data-filter="frontend">Frontend</button>
+      <button class="filter-btn" data-filter="backend">Backend</button>
+    </div>
+
+    <!-- ============================================================
+         GRID DE PROYECTOS
+    ============================================================ -->
+    <section class="projects-grid-full" id="projectsGrid">
+
+      <!-- Card 1 — AutomatIA (slider/lightbox de capturas) -->
+      <article class="project-card reveal" data-category="ia" data-repo="https://github.com/marcosgonme03/AutomatIA" data-demo="https://marcoscode.com/AutomatIA/">
+        <a href="projects/automatia.html" class="card-link" tabindex="-1" aria-label="Ver detalles de AutomatIA">
+          <div class="card-image automatIA-slider" tabindex="0" aria-label="Capturas de AutomatIA">
+            <div class="slider-wrapper">
+              <img src="images/AutomatIA/Captura de pantalla 2026-04-29 131528.png" alt="AutomatIA - Home" class="slider-img active" />
+              <img src="images/AutomatIA/Captura de pantalla 2026-04-29 131616.png" alt="AutomatIA - Servicios" class="slider-img" />
+              <img src="images/AutomatIA/Captura de pantalla 2026-04-29 131623.png" alt="AutomatIA - Resultados" class="slider-img" />
+              <img src="images/AutomatIA/Captura de pantalla 2026-04-29 131630.png" alt="AutomatIA - Calculadora" class="slider-img" />
+              <img src="images/AutomatIA/Captura de pantalla 2026-04-29 131639.png" alt="AutomatIA - Integraciones" class="slider-img" />
+              <img src="images/AutomatIA/image.png" alt="AutomatIA - Extra" class="slider-img" />
+            </div>
+            <div class="slider-controls">
+              <button class="slider-prev" aria-label="Anterior">&#8592;</button>
+              <button class="slider-next" aria-label="Siguiente">&#8594;</button>
+            </div>
+            <div class="slider-dots">
+              <button class="slider-dot active" aria-label="Captura 1"></button>
+              <button class="slider-dot" aria-label="Captura 2"></button>
+              <button class="slider-dot" aria-label="Captura 3"></button>
+              <button class="slider-dot" aria-label="Captura 4"></button>
+              <button class="slider-dot" aria-label="Captura 5"></button>
+              <button class="slider-dot" aria-label="Captura 6"></button>
+            </div>
+          </div>
+          <div class="card-info">
+            <div class="card-meta">
+              <span class="card-tag">Web App</span>
+              <span class="card-tag">IA</span>
+              <span class="card-tag">Automatización</span>
+              <span class="card-tag">HTML5</span>
+              <span class="card-tag">CSS3</span>
+              <span class="card-tag">JavaScript</span>
+              <span class="card-tag">OpenAI API</span>
+              <span class="card-tag">Zapier</span>
+              <span class="card-tag">Make</span>
+              <span class="card-tag">n8n</span>
+              <span class="card-tag">Google Cloud</span>
+              <span class="card-tag">Mailchimp</span>
+              <span class="card-tag">Slack</span>
+              <span class="card-tag">HubSpot</span>
+              <span class="card-tag">Notion</span>
+              <span class="card-tag">Shopify</span>
+            </div>
+            <h3 class="card-title">AutomatIA</h3>
+            <p class="card-desc">
+              AutomatIA es una web-app que ayuda a PYMEs a automatizar tareas repetitivas y procesos de negocio usando Inteligencia Artificial. Ofrece chatbots para atención al cliente, agentes de ventas IA, asistentes de voz, email marketing automatizado, generación de contenido, integración con CRM/ERP y automatización de cobros. El usuario puede calcular su ahorro, ver resultados reales y solicitar diagnóstico gratuito. Todo el diseño está orientado a conversión, claridad y confianza.
+            </p>
+          </div>
+        </a>
+        <div class="card-actions">
+          <a href="https://github.com/marcosgonme03/AutomatIA" class="card-action card-action--code" data-action="repo" target="_blank" rel="noopener noreferrer" aria-label="Ver código en GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            Código
+          </a>
+          <a href="https://marcoscode.com/AutomatIA/" class="card-action card-action--demo" data-action="demo" target="_blank" rel="noopener noreferrer" aria-label="Ver demo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Demo
+          </a>
+        </div>
+      </article>
+      <!-- ...existing code... -->
+
+      <!-- Card 2 — Ascend Dashboard -->
+      <article class="project-card reveal" data-category="frontend"
+               data-repo="https://github.com/marcosgonme03/ascend-dashboard"
+               data-demo="https://ascend-dashboard.vercel.app">
+        <a href="projects/ascend-dashboard.html" class="card-link" tabindex="-1" aria-label="Ver detalles de Ascend Dashboard">
+          <div class="card-image">
+            <div class="card-image-placeholder" aria-label="Preview del proyecto Ascend Dashboard">
+              <span class="card-num">02</span>
+            </div>
+          </div>
+          <div class="card-info">
+            <div class="card-meta">
+              <span class="card-tag">React</span>
+              <span class="card-tag">TypeScript</span>
+              <span class="card-tag">Vite</span>
+              <span class="card-tag">Tailwind CSS</span>
+              <span class="card-tag">shadcn-ui</span>
+              <span class="card-tag">Frontend</span>
+            </div>
+            <h3 class="card-title">Ascend Dashboard</h3>
+            <p class="card-desc">
+              Dashboard moderno y responsivo construido con React 18 y TypeScript. Utiliza Vite para compilación ultra rápida, Tailwind CSS para estilos consistentes, y componentes shadcn-ui accesibles. Desplegado en Vercel con 23 despliegues automáticos. Editable en Lovable o en IDE local con sincronización bidireccional.
+            </p>
+          </div>
+        </a>
+        <div class="card-actions">
+          <a href="https://github.com/marcosgonme03/ascend-dashboard" class="card-action card-action--code" data-action="repo" target="_blank" rel="noopener noreferrer" aria-label="Ver código en GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            Código
+          </a>
+          <a href="https://ascend-dashboard.vercel.app" class="card-action card-action--demo" data-action="demo" target="_blank" rel="noopener noreferrer" aria-label="Ver demo en vivo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Demo
+          </a>
+        </div>
+      </article>
+
+      <!-- Card 3 — RAG Intelligence -->
+      <article class="project-card reveal" data-category="ia"
+               data-repo="https://github.com/marcosgonme03/RAG-EMPAQUETADO"
+               data-demo="">
+        <div class="card-image">
+          <div class="card-image-placeholder" aria-label="Preview del proyecto RAG">
+            <span class="card-num">03</span>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-meta">
+            <span class="card-tag">RAG</span>
+            <span class="card-tag">Python</span>
+            <span class="card-tag">IA</span>
+          </div>
+          <h3 class="card-title">RAG Intelligence</h3>
+          <p class="card-desc">Sistema de Retrieval Augmented Generation con búsqueda semántica end-to-end. Extracción automática de documentos, generación de embeddings vectoriales con Chroma DB, recuperación por similitud coseno y respuestas contextualizadas con LLM.</p>
+          <div class="card-actions">
+            <a href="#" class="card-action card-action--code" data-action="repo" target="_blank" rel="noopener noreferrer" aria-label="Ver código en GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              Código
+            </a>
+            <a href="#" class="card-action card-action--demo hidden" data-action="demo" target="_blank" rel="noopener noreferrer" aria-label="Ver demo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 4 — Landing Premium -->
+      <article class="project-card reveal" data-category="frontend"
+               data-repo="https://github.com/marcosgonme03/landing-premium"
+               data-demo="">
+        <div class="card-image">
+          <div class="card-image-placeholder" aria-label="Preview del proyecto Landing">
+            <span class="card-num">04</span>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-meta">
+            <span class="card-tag">Frontend</span>
+            <span class="card-tag">UI/UX</span>
+          </div>
+          <h3 class="card-title">Landing Premium</h3>
+          <p class="card-desc">Landing page de alto impacto para negocio local. Diseño orientado a conversión con animaciones fluidas, scroll reveal interactivo, y optimización móvil completa. Tipografía cuidada y paleta de colores coherente.</p>
+          <div class="card-actions">
+            <a href="#" class="card-action card-action--code" data-action="repo" target="_blank" rel="noopener noreferrer" aria-label="Ver código en GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              Código
+            </a>
+            <a href="#" class="card-action card-action--demo hidden" data-action="demo" target="_blank" rel="noopener noreferrer" aria-label="Ver demo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 5 — Correcaminos Gimnasio -->
+      <article class="project-card reveal" data-category="fullstack"
+               data-repo="https://github.com/marcosgonme03/correcaminos-gimnasio"
+               data-demo="">
+        <div class="card-image">
+          <div class="card-image-placeholder" aria-label="Preview del proyecto Correcaminos">
+            <span class="card-num">05</span>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-meta">
+            <span class="card-tag">Full Stack</span>
+            <span class="card-tag">Node.js</span>
+            <span class="card-tag">React</span>
+          </div>
+          <h3 class="card-title">Correcaminos Gimnasio</h3>
+          <p class="card-desc">Ecosistema digital completo para la gestión de un gimnasio. Backend robusto en Node.js/Express, frontend interactivo en React, base de datos optimizada con PostgreSQL. Incluye panel administrativo, gestión de membresías y reportes en tiempo real.</p>
+          <div class="card-actions">
+            <a href="#" class="card-action card-action--code" data-action="repo" target="_blank" rel="noopener noreferrer" aria-label="Ver código en GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              Código
+            </a>
+            <a href="#" class="card-action card-action--demo hidden" data-action="demo" target="_blank" rel="noopener noreferrer" aria-label="Ver demo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Demo
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-inner">
+      <a href="index.html" class="nav-logo" aria-label="Inicio">
+        <span class="logo-slash">/</span>MG
+      </a>
+      <p class="footer-tagline">Desarrollo que conecta, experiencias que fluyen.</p>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Marcos González Mesa — Todos los derechos reservados</p>
+      <div class="footer-socials" aria-label="Redes sociales">
+        <a href="https://github.com/marcosgonme03" target="_blank" rel="noopener noreferrer" class="footer-social" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/marcos-gonzalez-471348273" target="_blank" rel="noopener noreferrer" class="footer-social" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // ============================================================
+    // FILTROS DE PROYECTOS
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const projectCards = document.querySelectorAll('.project-card');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const filter = btn.dataset.filter;
+
+          // Actualizar botón activo
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          // Filtrar proyectos
+          projectCards.forEach(card => {
+            if (filter === 'all' || card.dataset.category === filter) {
+              card.style.display = '';
+              setTimeout(() => card.classList.add('reveal'), 10);
+            } else {
+              card.style.display = 'none';
+              card.classList.remove('reveal');
+            }
+          });
+        });
+      });
+
+      // Manejar enlaces de repo y demo
+      document.querySelectorAll('[data-action]').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const action = this.dataset.action;
+          const card = this.closest('.project-card');
+          const repo = card.dataset.repo;
+          const demo = card.dataset.demo;
+
+          if (action === 'repo' && repo) {
+            window.open(repo, '_blank');
+          } else if (action === 'demo' && demo) {
+            window.open(demo, '_blank');
+          }
+        });
+      });
+
+      // Mostrar/ocultar botones de demo
+      projectCards.forEach(card => {
+        const demoBtn = card.querySelector('[data-action="demo"]');
+        const demo = card.dataset.demo;
+        if (!demo) {
+          demoBtn.classList.add('hidden');
+        } else {
+          demoBtn.classList.remove('hidden');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
