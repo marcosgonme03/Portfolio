@@ -1,0 +1,9 @@
+# Ignorar .env con credenciales reales
+.env
+
+# Dependencias instaladas
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
